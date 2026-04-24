@@ -100,6 +100,43 @@
 - **[Entity 1]**: [What it represents, key attributes without implementation]
 - **[Entity 2]**: [What it represents, relationships to other entities]
 
+## Prioritization Framework *(mandatory)*
+
+### Requirement Prioritization (MoSCoW)
+
+| Requirement Group | Priority | Rationale |
+|-------------------|----------|-----------|
+| [Core capability group] | Must | [Critical to deliver the primary outcome] |
+| [Important capability group] | Should | [High value but can follow after Must scope] |
+| [Nice-to-have capability group] | Could | [Incremental value, lower urgency] |
+| [Deferred capability group] | Won't (this release) | [Explicitly out of current scope] |
+
+### Delivery Sequencing (WSJF)
+
+| Initiative / Slice | Business Value (1-10) | Time Criticality (1-10) | Risk Reduction / Opportunity Enablement (1-10) | Job Size (1-10) | WSJF Score |
+|--------------------|------------------------|--------------------------|-----------------------------------------------|------------------|------------|
+| [Initiative A] | [ ] | [ ] | [ ] | [ ] | [(BV + TC + RR/OE) / JS] |
+| [Initiative B] | [ ] | [ ] | [ ] | [ ] | [(BV + TC + RR/OE) / JS] |
+
+Scoring note: Re-evaluate WSJF before planning lock and before implementation start.
+
+## Outcome Metrics & Guardrails *(mandatory)*
+
+### North Star Outcome
+
+- **NSM-001**: [Primary user/business outcome this feature is intended to improve]
+
+### Guardrail Metrics
+
+- **GR-001**: [Reliability/quality guardrail that must not degrade]
+- **GR-002**: [Performance/cost/operational guardrail that must remain within limits]
+
+## Risks & Dependencies *(mandatory)*
+
+- **RISK-001**: [Top delivery or product risk and mitigation approach]
+- **RISK-002**: [Safety/security/compliance risk and mitigation approach]
+- **DEP-001**: [External dependency that may affect scope, timeline, or quality]
+
 ## Non-Functional Requirements *(mandatory)*
 
 ### Security & Privacy
@@ -122,6 +159,12 @@
 
 - **COMP-001**: [State compatibility impact and migration expectation, or explicitly
   note that no breaking change is expected]
+
+## Operational Readiness *(mandatory for production-impacting features)*
+
+- **OPS-001**: [Define required monitoring/alerting and key operational signals]
+- **OPS-002**: [Define rollout and rollback criteria for safe release]
+- **OPS-003**: [Define owner responsibilities/escalation path for failures]
 
 ## Success Criteria *(mandatory)*
 
@@ -149,3 +192,9 @@
 - [Assumption about scope boundaries, e.g., "Mobile support is out of scope for v1"]
 - [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
 - [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
+
+## Decision Log *(mandatory)*
+
+| Decision | Options Considered | Selected Option | Rationale |
+|----------|---------------------|-----------------|-----------|
+| [D-001] [Decision topic] | [Option A, Option B, Option C] | [Chosen option] | [Why chosen, including trade-offs and rejected alternatives] |

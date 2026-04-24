@@ -153,6 +153,7 @@ Given that feature description, do this:
       - [ ] Focused on user value and business needs
       - [ ] Written for non-technical stakeholders
       - [ ] All mandatory sections completed
+      - [ ] Problem framing includes explicit scope boundaries and non-goals
       
       ## Requirement Completeness
       
@@ -164,6 +165,19 @@ Given that feature description, do this:
       - [ ] Edge cases are identified
       - [ ] Scope is clearly bounded
       - [ ] Dependencies and assumptions identified
+      - [ ] Requirement prioritization is explicit (MoSCoW or equivalent)
+      - [ ] Delivery sequencing is defined with a scoring model (WSJF or equivalent)
+      - [ ] North star outcome and guardrail metrics are defined
+      - [ ] Risks, dependencies, and mitigations are identified
+      - [ ] Operational readiness criteria are defined for production-impacting features
+      - [ ] Decision log captures major trade-offs and rejected alternatives
+
+      ## Requirement Quality Standards
+
+      - [ ] SMART quality check applied to success criteria (specific, measurable, achievable, relevant, time-bounded where applicable)
+      - [ ] INVEST quality check applied to user stories (independent, negotiable, valuable, estimable, small, testable)
+      - [ ] EARS-style requirement wording used consistently (e.g., "System MUST ..." with clear triggers/responses where needed)
+      - [ ] Ambiguous adjectives are quantified or explicitly defined
       
       ## Feature Readiness
       
@@ -171,6 +185,7 @@ Given that feature description, do this:
       - [ ] User scenarios cover primary flows
       - [ ] Feature meets measurable outcomes defined in Success Criteria
       - [ ] No implementation details leak into specification
+      - [ ] Launch/rollback criteria are present where release risk exists
       
       ## Notes
       
