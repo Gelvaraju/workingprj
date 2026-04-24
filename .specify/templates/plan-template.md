@@ -31,7 +31,16 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- Maintainability: confirm the design keeps responsibilities cohesive, interfaces
+  explicit, and any added dependency or pattern justified.
+- Security: identify input validation, secret handling, authorization, error
+  handling, and fail-safe behaviors needed for the feature.
+- Verification: define mandatory automated tests, regression coverage, and static
+  analysis/linting/formatting checks required before merge.
+- Traceability: link planned artifacts, requirements, implementation tasks, tests,
+  and documentation updates required for review and release.
+- Compatibility: identify breaking changes, migration steps, and review approvals
+  required if contracts, schemas, or operational behavior change.
 
 ## Project Structure
 

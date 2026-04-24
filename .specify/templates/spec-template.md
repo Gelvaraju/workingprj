@@ -100,6 +100,29 @@
 - **[Entity 1]**: [What it represents, key attributes without implementation]
 - **[Entity 2]**: [What it represents, relationships to other entities]
 
+## Non-Functional Requirements *(mandatory)*
+
+### Security & Privacy
+
+- **NFR-SEC-001**: System MUST [describe authentication, authorization, input
+  validation, secret handling, or privacy protection requirements relevant to this
+  feature]
+
+### Reliability & Safety
+
+- **NFR-REL-001**: System MUST [describe error handling, recovery behavior, safety
+  guardrails, or fail-safe expectations relevant to this feature]
+
+### Maintainability & Traceability
+
+- **NFR-MNT-001**: Implementation MUST [describe documentation, observability,
+  traceability, reviewability, or operational support expectations]
+
+### Breaking Change & Compatibility Impact
+
+- **COMP-001**: [State compatibility impact and migration expectation, or explicitly
+  note that no breaking change is expected]
+
 ## Success Criteria *(mandatory)*
 
 <!--
