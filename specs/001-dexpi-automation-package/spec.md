@@ -5,20 +5,30 @@
 **Status**: Draft  
 **Input**: User description: "Build a standalone DEXPI-to-Automation engineering POC that takes a DEXPI XML file and produces a complete automation package: (1) a VDI/VDE/NAMUR 2658 Part 4 compliant MTP file for HMI engineering, and (2) a Siemens S7-1500 PLC program project for control engineering using TIA Portal MTP CFL libraries..."
 
+## Clarifications
+
+### Session 2026-04-24
+
+- Q: What is the expected PLC project deliverable level in this release? → A: Generate a full TIA Portal importable S7-1500 project artifact including PLC blocks, interface structures, and OPC UA-aligned tags.
+- Q: Which target systems are mandatory for import validation in this release? → A: TIA Portal only; PCS Neo validation is not in scope for this release.
+- Q: Which OPC UA security profile is required for generated connectivity artifacts? → A: `None` security mode (development/POC only); production security hardening is deferred to post-POC.
+- Q: Which DEXPI profile version(s) must be supported? → A: Both DEXPI 2.0 and DEXPI 3.0 are in scope.
+- Q: What is the mandatory TIA Portal version baseline for import validation? → A: Validation MUST include TIA Portal V20 and V21.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Generate importable HMI package from DEXPI (Priority: P1)
 
-As an application engineer, I provide a DEXPI XML file and receive an MTP output that includes HMI-relevant content (screens, tags, and topology representation) so I can import it into the designated HMI/POL engineering environment without manual rebuild.
+As an application engineer, I provide a DEXPI XML file and receive an MTP output that includes HMI-relevant content (screens, tags, and topology representation) so I can import it into the designated TIA Portal engineering environment without manual rebuild.
 
 **Why this priority**: This delivers the primary value of eliminating manual HMI engineering effort from P&ID source data.
 
-**Independent Test**: Run conversion with a valid representative DEXPI input and verify an output package is produced, schema-compliant, and importable in the target HMI/POL workflow.
+**Independent Test**: Run conversion with a valid representative DEXPI input and verify an output package is produced, schema-compliant, and importable in target TIA Portal V20 and V21 workflows.
 
 **Acceptance Scenarios**:
 
 1. **Given** a valid DEXPI XML file with equipment, instruments, nozzles, piping, and tags, **When** conversion is executed, **Then** an MTP output is generated with HMI screen objects, tag definitions, and represented piping/topology.
-2. **Given** the generated MTP output, **When** it is validated and imported into the designated target HMI/POL system, **Then** validation and import complete without blocking errors.
+2. **Given** the generated MTP output, **When** it is validated and imported into designated target TIA Portal V20 and V21 systems, **Then** validation and import complete without blocking errors in both versions.
 
 ---
 
@@ -64,20 +74,20 @@ As a QA/commissioning engineer, I need deterministic traceability and robust err
 
 ### Functional Requirements
 
-- **FR-001**: System MUST parse DEXPI XML inputs and extract equipment, instruments, piping segments, nozzles, and tag identifiers.
+- **FR-001**: System MUST parse DEXPI XML inputs conforming to DEXPI 2.0 or DEXPI 3.0 profiles and extract equipment, instruments, piping segments, nozzles, and tag identifiers.
 - **FR-002**: System MUST generate an MTP artifact containing HMI-relevant engineering content from valid DEXPI input.
 - **FR-003**: System MUST preserve represented spatial/topological relationships of process objects and piping from source input.
 - **FR-004**: System MUST map DEXPI components to corresponding MTP CFL library semantics for HMI artifact generation.
 - **FR-005**: System MUST generate NAMUR-aligned tags from extracted instrument and interface data.
 - **FR-006**: System MUST link generated HMI objects to their corresponding generated tags.
-- **FR-007**: System MUST generate a usable S7-1500 PLC engineering output derived from the same DEXPI source.
+- **FR-007**: System MUST generate a full TIA Portal importable S7-1500 PLC project artifact derived from the same DEXPI source, including PLC blocks, interface structures, and OPC UA-aligned tags.
 - **FR-008**: System MUST reuse shared MTP CFL semantic mapping across HMI and PLC generation to keep both outputs consistent.
 - **FR-009**: System MUST generate PLC-side interface/signal structures that align with generated HMI/MTP-side interfaces.
-- **FR-010**: System MUST generate deterministic OPC UA interface mapping artifacts so HMI and PLC outputs can be connected consistently.
+- **FR-010**: System MUST generate deterministic OPC UA interface mapping artifacts so HMI and PLC outputs can be connected consistently. Generated OPC UA connectivity artifacts MUST target `None` security mode (no transport encryption or signing) appropriate for development/POC environments; production security profile is explicitly out of scope for this release.
 - **FR-011**: System MUST produce warning reports for incomplete, malformed, or unmapped source elements without crashing.
 - **FR-012**: System MUST generate partial valid outputs for resolvable elements when some source elements are invalid or unmapped.
 - **FR-013**: System MUST record traceability from each generated HMI/PLC element back to source DEXPI identifiers and mapping decisions.
-- **FR-014**: System MUST produce outputs suitable for import/use in the designated target HMI and PLC engineering workflows.
+- **FR-014**: System MUST produce outputs suitable for direct import/use in the designated target HMI and PLC engineering workflows without manual structural reconstruction. Mandatory import validation baseline for this release is TIA Portal V20 and V21.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -133,6 +143,7 @@ Scoring note: WSJF values must be re-scored at plan finalization and before impl
 
 - **NFR-SEC-001**: System MUST run in local/on-prem compatible mode and MUST NOT transmit source process data outside configured engineering boundaries unless explicitly approved.
 - **NFR-SEC-002**: System MUST log conversion and mapping decisions without exposing secrets or sensitive credentials.
+- **NFR-SEC-003**: Generated OPC UA artifacts MUST use `None` security mode for this POC release. A documented upgrade path to `SignAndEncrypt` + `Basic256Sha256` MUST be included in operational readiness notes to prevent security debt in production adoption.
 
 ### Reliability & Safety
 
@@ -162,13 +173,14 @@ Scoring note: WSJF values must be re-scored at plan finalization and before impl
 - **SC-002**: For representative in-scope samples, end-to-end generation completes within 60 seconds per input file.
 - **SC-003**: At least 95% of in-scope source components are automatically mapped without manual intervention in baseline validation samples.
 - **SC-004**: 100% of generated output interface elements include source trace references and mapping evidence entries.
-- **SC-005**: 100% of generated output packages satisfy schema/format validation checks defined for designated target engineering workflows.
+- **SC-005**: 100% of generated output packages satisfy schema/format validation checks and import validation gates in both TIA Portal V20 and V21 designated target engineering workflows.
 
 ## Assumptions
 
 - Source DEXPI files follow expected profile conventions for required identifiers and structural sections.
+- Supported source profile versions for this release are limited to DEXPI 2.0 and DEXPI 3.0.
 - Required mapping rules for standard in-scope component families are available before execution.
-- Target engineering environments support import/use of the produced artifact versions.
+- Target engineering environments include TIA Portal V20 and V21 for mandatory import validation and support import/use of the produced artifact versions.
 - OPC UA connectivity setup is driven by generated interface maps; runtime commissioning specifics remain outside this feature scope.
 - Alarm/event engineering, advanced process optimization, runtime simulation, round-trip back-conversion, and non-MTP HMI outputs are out of scope for this POC.
 
