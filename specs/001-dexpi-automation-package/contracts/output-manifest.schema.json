@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/contracts/output-manifest.schema.json",
+  "title": "Conversion Output Manifest",
+  "type": "object",
+  "required": [
+    "runId",
+    "sourceFile",
+    "dexpiVersion",
+    "ruleSetVersion",
+    "generatedAtUtc",
+    "targetSystems",
+    "opcuaSecurityMode",
+    "artifacts",
+    "validation",
+    "traceabilityCoverage"
+  ],
+  "properties": {
+    "runId": { "type": "string", "minLength": 1 },
+    "sourceFile": { "type": "string", "minLength": 1 },
+    "dexpiVersion": { "type": "string", "enum": ["2.0", "3.0"] },
+    "ruleSetVersion": { "type": "string", "minLength": 1 },
+    "generatedAtUtc": { "type": "string", "format": "date-time" },
+    "targetSystems": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["TIA_V20", "TIA_V21"] },
+      "minItems": 2,
+      "uniqueItems": true
+    },
+    "opcuaSecurityMode": { "type": "string", "const": "None" },
+    "opcuaMigrationPath": {
+      "type": "string",
+      "enum": ["SignAndEncrypt+Basic256Sha256"]
+    },
+    "artifacts": {
+      "type": "object",
+      "required": ["mtp", "plc", "opcua", "reports"],
+      "properties": {
+        "mtp": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "plc": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "opcua": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "reports": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 4
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "required": ["schema", "import"],
+      "properties": {
+        "schema": {
+          "type": "object",
+          "required": ["dexpi", "mtp"],
+          "properties": {
+            "dexpi": { "type": "boolean" },
+            "mtp": { "type": "boolean" }
+          },
+          "additionalProperties": true
+        },
+        "import": {
+          "type": "object",
+          "required": ["TIA_V20", "TIA_V21"],
+          "properties": {
+            "TIA_V20": { "type": "boolean" },
+            "TIA_V21": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "traceabilityCoverage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    }
+  },
+  "additionalProperties": false
+}
